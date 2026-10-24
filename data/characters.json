@@ -1,17 +1,17 @@
 [
   {
-    "name": "",
-    "age": 0,
-    "photo": "url"
+    "name": "Anton Chigurh",
+    "age": 57,
+    "person_photo": "https://upload.wikimedia.org/wikipedia/en/4/41/Anton_Chigurh.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original"
   },
   {
-    "name": "",
-    "age": 0,
-    "photo": "url"
+    "name": "Hans Landa",
+    "age": 44,
+    "person_photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs4ibVXZa_rM_YPuUJOwvN7MVoelGSUZLcYp8UDeigAw&s=10"
   },
   {
-    "name": "",
-    "age": 0,
-    "photo": "url"
+    "name": "Liam Neeson",
+    "age": 74,
+    "person_photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTa-YfkwoqAC_J_LYHeFU7xDOuSCvE4yGemCX5oTqUuw&s=10"
   }
 ]
