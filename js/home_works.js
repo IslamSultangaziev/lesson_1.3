@@ -348,3 +348,138 @@ fetch('/data/bio.json')
     .catch(error => {
         console.log('Ошибка:', error);
     });
+
+    //dz5//
+
+const form = document.querySelector("#registrationForm");
+const message = document.querySelector("#message");
+const result_1 = document.querySelector("#result_1");
+const submitBtn = document.querySelector("#submitBtn");
+
+const API_URL = "https://jsonplaceholder.typicode.com/posts";
+
+form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    message.textContent = "";
+    result.textContent = "";
+
+    // 1. Получаем данные формы
+const name = form.elements.name.value.trim();
+const email = form.elements.email.value.trim();
+const password = form.elements.password.value;
+const age = Number(form.elements.age.value);
+const gender = form.elements.gender.value;
+const consent = form.elements.consent.checked;
+const format = form.elements.format.value;
+
+ // 2. Дополнительная проверка данных
+if (!name || !email || !password || !gender) {
+     message.textContent = "Заполните все обязательные поля.";
+     return;
+}
+
+if (!Number.isInteger(age) || age < 1 || age > 120) {
+    message.textContent =
+        "Введите корректный возраст от 1 до 120 лет.";
+     return;
+}
+
+if (age < 18) {
+    message.textContent =
+        "Отправка запрещена: вам должно быть не менее 18 лет.";
+    return;
+}
+
+    if (!consent) {
+        message.textContent =
+            "Для отправки необходимо согласиться на обработку данных.";
+        return;
+    }
+
+    // 3. Формируем объект с данными
+    const userData = {
+        name: name,
+        email: email,
+        password: password,
+        age: age,
+        gender: gender,
+        consent: consent
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Отправка...";
+
+    try {
+        let response;
+
+        if (format === "json") {
+            response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userData)
+            });
+        }
+
+        else if (format === "formdata") {
+            const formData = new FormData(form);
+
+            formData.delete("format");
+
+
+            response = await fetch(API_URL, {
+                method: "POST",
+                body: formData
+            });
+        } else {
+            message.textContent = "Неизвестный формат отправки.";
+            return;
+        }
+
+        // 4. Проверяем HTTP-статус
+        if (!response.ok) {
+            throw new Error(
+                `Ошибка сервера: HTTP ${response.status} ${response.statusText}`
+            );
+        }
+
+        // 5. Читаем ответ и проверяем корректность JSON
+        const responseText = await response.text();
+        let responseData;
+
+        try {
+            responseData = JSON.parse(responseText);
+        } catch {
+            throw new Error("Сервер вернул некорректный JSON.");
+        }
+
+        // 6. Показываем результат
+        message.textContent = "Данные успешно отправлены!";
+        result_1.textContent = JSON.stringify(
+            responseData,
+            null,
+            2
+        );
+
+        console.log("Ответ сервера:", responseData);
+
+    } catch (error) {
+       
+        console.error("Ошибка при отправке:", error);
+
+        if (error instanceof TypeError) {
+            message.textContent =
+                "Ошибка сети. Проверьте подключение к интернету " +
+                "или доступность сервера.";
+        } else {
+            message.textContent =
+                error.message || "Произошла неизвестная ошибка.";
+        }
+    } finally {
+        // Кнопка снова доступна даже при ошибке
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Отправить";
+    }
+});

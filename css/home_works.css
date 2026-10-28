@@ -227,3 +227,41 @@
     height: 100%;
     object-fit: cover;
 }
+
+/*dz5*/
+h1 {
+    background-color: #000;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background-color: #000;
+}
+
+input, select, button {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.consent {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.consent input {
+    width: auto;
+
+}
+
+button {
+    cursor: pointer;
+}
+
+#message {
+    white-space: pre-wrap;
+}
+    
